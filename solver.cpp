@@ -152,3 +152,12 @@ ComplexVariable solver::operator /(ComplexVariable x, ComplexVariable y ){
 ComplexVariable solver::operator ==(ComplexVariable x, ComplexVariable y ){
     return y;
 }
+
+std::complex<double> solver::operator +(double x, std::complex<double> y){
+    return y;
+}
+
+std::complex<double> solver::operator -(double x, std::complex<double> y){
+    return y;
+}
+

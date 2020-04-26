@@ -12,6 +12,8 @@ namespace solver{
     } ComplexVariable;
     double solve(RealVariable x);
     std::complex<double> solve(ComplexVariable y);
+    std::complex<double> operator +(double x, std::complex<double> y);
+    std::complex<double> operator -(double x, std::complex<double> y);
     RealVariable operator *(double x, RealVariable y );
     RealVariable operator ^(double x, RealVariable y );
     RealVariable operator +(double x, RealVariable y );
