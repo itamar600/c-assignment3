@@ -15,7 +15,14 @@ namespace solver{
 
     typedef struct ComplexVariable{
         public:
-        double variable=0;
+        struct pow_2{
+            std::complex<double> coeff=0;
+        }pow_2;
+        struct pow_1{
+            std::complex<double> coeff=1;
+        }pow_1;
+        std::complex<double> free=0;
+        std::complex<double> result=0;
     } ComplexVariable;
     double solve(RealVariable x);
     std::complex<double> solve(ComplexVariable y);
