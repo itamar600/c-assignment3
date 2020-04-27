@@ -3,7 +3,14 @@
 namespace solver{
     typedef struct RealVariable{
         public:
-        double variable=0;
+        struct pow_2{
+            double coeff=0;
+        }pow_2;
+        struct pow_1{
+            double coeff=1;
+        }pow_1;
+        double free=0;
+        double result=0;
     } RealVariable;
 
     typedef struct ComplexVariable{
