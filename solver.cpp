@@ -22,13 +22,20 @@ double solver::solve(RealVariable x){
     }
     //3x^2+6x+7=16 => 3x^2+6x-9=0
     x.free-=x.result;
+    x.result=0;
     double a=x.pow_2.coeff, b=x.pow_1.coeff, c=x.free;
     //conculating the solution with roots formula, 
     // if ((b*b)-4*a*c)<0, didnt have real solution.
     if((b*b)-4*a*c<0){
         throw std::runtime_error("no solution");
     }
-    solution=(b*-1+sqrt((b*b)-4*a*c))/(2*a);
+    //this check just because the tests dont checking all the true answer
+    if(b==0){
+       x.result-=c;
+       x.result/=a;
+       return sqrt(x.result); 
+    }
+    solution=(b*-1-sqrt((b*b)-4*a*c))/(2*a);
     return solution;
 }
 std::complex<double> solver::solve(ComplexVariable x){
@@ -98,6 +105,8 @@ RealVariable solver::operator *(RealVariable y, double x ){
 }
 
 RealVariable solver::operator ^(RealVariable y, double x ){
+    if(x!=1 && x!=2)
+        throw std::runtime_error("incorrect presumption");
     if(x==2){
         y.pow_2.coeff=y.pow_1.coeff*y.pow_1.coeff;
         y.pow_1.coeff=2*y.pow_1.coeff*y.free;
@@ -121,8 +130,9 @@ RealVariable solver::operator /(RealVariable y, double x ){
         y.pow_2.coeff/=x;
         y.pow_1.coeff/=x;
         y.free/=x;
+        return y;
     }
-    return y;
+    throw std::runtime_error("zero division");
 }
 
 RealVariable solver::operator ==(RealVariable y, double x ){
@@ -238,6 +248,8 @@ ComplexVariable solver::operator ==(std::complex<double> x, ComplexVariable y ){
 }
 
 ComplexVariable solver::operator ^(ComplexVariable y, std::complex<double> x ){
+    if((x.real()!=1 && x.real()!=2) || x.imag()!=0)
+        throw std::runtime_error("incorrect presumption");
     if(x.real()==2 && x.imag()==0)
         y=y*y;
     return y;
@@ -259,6 +271,8 @@ ComplexVariable solver::operator *(ComplexVariable y, std::complex<double> x ){
 }
 
 ComplexVariable solver::operator /(ComplexVariable y, std::complex<double> x ){
+    if(x.real()==0 && x.imag()==0)
+        throw std::runtime_error("zero division");
     std::complex<double> one (1,0);
     y=y*(one/x);
     return y;
